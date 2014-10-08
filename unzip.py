@@ -16,5 +16,5 @@ def parse(filename):
     entry[eName] = rest
   yield entry
 
-for e in parse("all.txt.gz"):
+for e in parse("Arts.txt.gz"):
   print simplejson.dumps(e)
