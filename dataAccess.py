@@ -9,6 +9,7 @@ maxlines = 15
 import json
 
 with open(filePath) as f:
+# 'with' statement can automatically close the file
 	counter = 0
 	for line in f:
 		if counter > maxlines:
@@ -22,7 +23,8 @@ with open(filePath) as f:
 			except ValueError:
 				line += next(f)
 
-f.close( )
+print(type(json_data))
+
 
 #if __name__ == '__main__':
 
