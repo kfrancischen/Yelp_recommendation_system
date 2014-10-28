@@ -2,6 +2,7 @@
 import json
 import subprocess
 from collections import defaultdict
+from textblob import TextBlob
 
 # read the restaurant data sets, it will generate the dataset for all the restaurants with desired keys
 # output is a list of dictionaries
@@ -76,13 +77,34 @@ def textualRatings(restaurants):
 					index = [i for i in range(len(restaurants)) if restaurants[i]['business_id'] == json_data['business_id']]
 					if index != []:
 						business_id = restaurants[index[0]]['business_id']
-						onlineRequest = 'curl -d "text='+json_data['text']+'" http://text-processing.com/api/sentiment/'
-						sentiment = subprocess.check_output(onlineRequest, shell=True)
-						print sentiment
-						sentiment = json.loads(sentiment)
-						if sentiment['label'] == 'pos':
+	
+					# This part is using the online tool to do the sentiment analysis
+
+					#	onlineRequest = 'curl -d "text='+json_data['text']+'" http://text-processing.com/api/sentiment/'
+					#	try:
+					#		sentiment = subprocess.check_output(onlineRequest, shell=True)
+					#		#stout,sderr = sentiment.communicate()
+					#		print sentiment
+					#		sentiment = json.loads(sentiment)
+					#		if sentiment['label'] == 'pos':
+					#			positive[business_id] += 1
+					#		elif sentiment['label'] == 'neg':
+					#			negative[business_id] += 1
+					#	except subprocess.CalledProcessError as e:
+					#		continue
+						
+						review = json_data['text']
+						blob = TextBlob(review)
+						positiveCount = 0
+						for sentence in blob.sentences:
+							sentence_polarity = sentence.sentiment.polarity
+							if sentence_polarity > 0:
+								positiveCount += 1
+							else:
+								positiveCount -= 1
+						if positiveCount > 0:
 							positive[business_id] += 1
-						elif sentiment['label'] == 'neg':
+						else:
 							negative[business_id] += 1
 					break
 				except ValueError:
