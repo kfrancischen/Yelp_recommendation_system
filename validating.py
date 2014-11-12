@@ -12,13 +12,17 @@ def errorTesting(textualRating, trueRating,bins):
 #	print weights
 	textHist = list(textHist)
 	trueHist = list(trueHist)
-#	print textHist,trueHist
+	print textHist,trueHist
 	textVariance = 0
 	trueVariance = 0
+	for i in range(len(textHist)):
+		textHist[i] /= float(sum(textHist))
+		trueHist[i] /= float(sum(trueHist))
+
 	for i in range(len(textHist)):
 		textVariance += (textHist[i]-np.average(textHist))**2
 		trueVariance += (trueHist[i] -np.average(trueHist))**2
 	score = (trueVariance - textVariance)**2 + (np.average(textHist,weights=weights) - np.average(trueHist,weights=weights))**2	
 	return score
 
-print errorTesting({'a':1,'b':2},{'a':2,'b':1,'c':1},[0.5,1.5,2.5])
+# print errorTesting({'a':1,'b':2},{'a':2,'b':1,'c':1},[0.5,1.5,2.5])

@@ -3,6 +3,7 @@ import json
 import subprocess
 from collections import defaultdict
 from textblob import TextBlob
+import numpy
 
 # read the restaurant data sets, it will generate the dataset for all the restaurants with desired keys
 # output is a list of dictionaries
@@ -60,7 +61,7 @@ def trueRatings(restaurants):
 
 
 # calculate the textural derived rating based on the online sentiment analysis
-def textualRatings(restaurants):
+def textualRatings(restaurants,alpha):
 	filePath = 'yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json'
 	textualRating = {}
 	positive = {}
@@ -86,7 +87,7 @@ def textualRatings(restaurants):
 					#		#stout,sderr = sentiment.communicate()
 					#		print sentiment
 					#		sentiment = json.loads(sentiment)
-					#		if sentiment['label'] == 'pos':
+					# 	if sentiment['label'] == 'pos':
 					#			positive[business_id] += 1
 					#		elif sentiment['label'] == 'neg':
 					#			negative[business_id] += 1
@@ -102,6 +103,8 @@ def textualRatings(restaurants):
 								positiveCount += 1
 							else:
 								positiveCount -= 1
+#							positiveCount += 2.0 / (1 + numpy.exp(-1000*sentence_polarity)) - 1
+#							print sentence_polarity, 2.0/(1+numpy.exp(-1000*sentence_polarity)) - 1
 						if positiveCount > 0:
 							positive[business_id] += 1
 						else:
@@ -113,7 +116,7 @@ def textualRatings(restaurants):
 	for i in range(len(restaurants)):
 		P = positive[restaurants[i]['business_id']];
 		N = negative[restaurants[i]['business_id']];
-		textualRating[restaurants[i]['business_id']] = float(P)/(N+P)*4+1;
+		textualRating[restaurants[i]['business_id']] = float(P)/(alpha*N+P)*4+1;
 	return textualRating
 
 
