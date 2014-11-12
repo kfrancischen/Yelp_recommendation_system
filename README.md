@@ -3,7 +3,7 @@ CS221_Project
 
 #### This is the repository for Stanford 2014-15 CS221 Project.
 1. #####Description:    
-This project is mainly about user's review evaluation and recommendation based on existed database of Amazon from 1995 to 2013. Database can be found in [Amazon database from SNAP](http://snap.stanford.edu/data/web-Amazon-links.html).
+This project is mainly about user's review evaluation and recommendation based on existed database of Yelp. Database can be found in [Yelp Challenge Dataset](https://www.yelp.com/dataset_challenge/dataset).
 
 2. **Contributers**:
   * Jiyue Wang: <jennifer.w0930@gmail.com>  
@@ -12,4 +12,4 @@ This project is mainly about user's review evaluation and recommendation based o
 
 
 
- Last Updated: 10.08.2014
+ Last Updated: 11.11.2014
